@@ -8,14 +8,19 @@ from urllib2 import urlopen
 app = Flask(__name__)
 
 tempfilepath='tmp/tmpmpinfo.csv'
+
 @app.route('/')
 def home():
+    """
+    function is called at start of app
+    :return:template name and info of MP's
+    """
     response = urlopen("https://data.gov.in/node/85984/datastore/export/csv")
     csv = response.read()
     csvstr = str(csv).strip("b'")
     lines = csvstr.split("\\n")
     try:
-        os.remove(tempfilepath)
+        os.remove(tempfilepath)  # removing temp file if present
     except OSError, e:
         print e
     with open(tempfilepath, 'wb') as csvf:
@@ -27,6 +32,10 @@ def home():
 
 @app.route('/search_filter', methods=["POST"])
 def filter_info():
+    """
+    function is called when filtered info needed
+    :return:template name and info of filtered MP's
+    """
     filter_type = request.form['filter_on']
     filter_val = request.form['filter']
     mp_info = read_csv(tempfilepath, {filter_type: filter_val})
@@ -34,6 +43,12 @@ def filter_info():
 
 
 def read_csv(filepath, filter={}):
+    """
+    function to read a csv and convert info to a list of dict
+    :param filepath is path of temp csv file:
+    :param filter is set of filter attributes:
+    :return: list of dict
+    """
     with open(filepath, 'rb') as file_obj:
         lines = file_obj
         header_removed = False
