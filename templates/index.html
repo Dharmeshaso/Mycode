@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<style type="text/css">
+    body{
+        background-color: #d0e4fe;
+    }
+    filter-btn{
+    }
+    info-view-table, th, td {
+        border: 2px solid black;
+        border-collapse: collapse;
+    }
+    td {
+        width: 150px;
+        height: 10px;
+        vertical-align: Top;
+    }
+
+</style>
+<h1>Parliament Attendance Info</h1>
+<form action="/search_filter" method="post">
+    <div class = 'filter-btn'>
+        <select name="filter_on">
+            <option value="name">Name</option>
+            <option value="const">Constituency</option>
+            <option value="state">State/Locality</option>
+        </select>
+        <input type="search" name="filter">
+        <b>Showing {{records}} Results</b>
+    </div>
+</form>
+<div class = 'info-view-table'>
+    <table>
+        <tr>
+            <td>
+                <b>S.No</b>
+            </td>
+            <td>
+                <b>Division/Seat No.</b>
+            </td>
+            <td>
+                <b>Name of Member</b>
+            </td>
+            <td>
+                <b>Lok Sabha</b>
+            </td>
+            <td>
+                <b>Session</b>
+            </td>
+            <td>
+                <b>State</b>
+            </td>
+            <td>
+                <b>Constituency</b>
+            </td>
+            <td>
+                <b>Total Sitting</b>
+            </td>
+            <td>
+                <b>Days of Attendence</b>
+            </td>
+        </tr>
+        {%for info in mp_info:%}
+        <tr>
+            <td>{{info['s_no']}}</td>
+            <td>{{info['div']}}</td>
+            <td>{{info['name']}}</td>
+            <td>{{info['lok_sabha']}}</td>
+            <td>{{info['session']}}</td>
+            <td>{{info['state']}}</td>
+            <td>{{info['const']}}</td>
+            <td>{{info['total_seat']}}</td>
+            <td>{{info['attnd_days']}}</td>
+        </tr>
+        {% endfor%}
+        </table>
+</div>
+</body>
+<script>
+
+</script>
+</html>
